@@ -4,7 +4,7 @@ export default function TgChannel() {
 
     return (
         <a target={"_blank"} href={"https://t.me/kl_development"}
-           className={"w-full flex items-center justify-center bg-black group opacity-60 hover:opacity-90 transition-opacity"}>
+           className={"w-full flex items-center justify-center bg-black group bg-opacity-50 hover:bg-opacity-70 transition-all"}>
             <svg xmlns="http://www.w3.org/2000/svg" width="100%" height={"auto"} viewBox={"0 0 640 640"}>
                 <path className={"transition-all fill-white group-hover:fill-[#F05EA9]"}
 
