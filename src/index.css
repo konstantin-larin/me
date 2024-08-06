@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+::selection {
+    @apply bg-violet-700 text-white;
+}
+
+:root{
+    --swiper-navigation-color: rgb(255 251 235);
+    --swiper-navigation-size: 1.5rem;
+}
+@media (min-width: 640px){
+    :root{
+        --swiper-navigation-size: 3rem;
+    }
+}
