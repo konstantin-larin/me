@@ -1,4 +1,4 @@
-import mainPhoto from "/src/assets/lilophoto.png";
+import mainPhoto from "/src/assets/mainphoto.png";
 import Section from "../../layouts/Section.jsx";
 
 export default function AboutMe() {
