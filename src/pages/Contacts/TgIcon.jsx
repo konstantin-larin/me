@@ -6,7 +6,15 @@ export default function TgIcon() {
             viewBox="0 0 48 48"
         >
             <path d="M24 4a20 20 0 100 40 20 20 0 100-40z"
-                  className={"transition-all fill-transparent group-hover:fill-[#29b6f6] stroke-1 stroke-white group-hover:stroke-[#29b6f6]"}
+                  className={`
+                  fill-[#29b6f6]
+                  md:transition-all 
+                  md:fill-transparent 
+                  md:group-hover:fill-[#29b6f6] 
+                  md:stroke-1 
+                  md:stroke-white 
+                  md:group-hover:stroke-[#29b6f6]`}
+
             ></path>
             <path
                 fill="#fff"

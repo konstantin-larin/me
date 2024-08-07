@@ -21,11 +21,17 @@ const sections = [
 ]
 
 function App() {
+    const [isScroll, setIsScroll] = useState()
     const [activeSectionId, setActiveSectionId] = useState(sections[0].id);
     const activeSectionIndex = sections.findIndex(section => section.id === activeSectionId);
 
+    function defineIsScroll(){
+        return window.innerHeight <= 450;
+    }
+
+
     function onWheel(e) {
-        if(Math.abs(e.deltaY) < 100) return;
+        if (Math.abs(e.deltaY) < 100) return;
         if (e.deltaY < 0 && activeSectionIndex > 0) {
             setActiveSectionId(sections[activeSectionIndex - 1].id);
         }
@@ -43,18 +49,57 @@ function App() {
         }
     }
 
-    function onResize(){
+    function onResize() {
+        setIsScroll(defineIsScroll());
         setActiveSectionId(sections[0].id);
     }
 
+    // для телефонов
+    function onTouchStart(e) {
+        const Y = e.touches[0].clientY;
+
+        function onTouchMove(e) {
+            const y = e.touches[0].clientY;
+            const diff = Y - y;
+            if (Math.abs(diff) > window.innerHeight / 4) {
+                onTouchEnd();
+                if (diff < 0 && activeSectionIndex > 0) {
+                    setActiveSectionId(sections[activeSectionIndex - 1].id);
+                }
+                if (diff > 0 && activeSectionIndex < sections.length - 1) {
+                    setActiveSectionId(sections[activeSectionIndex + 1].id);
+                }
+            }
+        }
+
+        function onTouchEnd() {
+            window.removeEventListener('touchmove', onTouchMove);
+            window.removeEventListener('touchend', onTouchEnd);
+            window.removeEventListener('touchcancel', onTouchEnd);
+        }
+
+        window.addEventListener('touchmove', onTouchMove);
+        window.addEventListener('touchend', onTouchEnd);
+        window.addEventListener('touchcancel', onTouchEnd);
+    }
+
     useEffect(() => {
-        window.addEventListener('wheel', onWheel);
-        document.addEventListener('keydown', onKeyDown);
-        window.addEventListener('resize', onResize);
-        return () => {
-            window.removeEventListener('resize', onResize);
-            window.removeEventListener('wheel', onWheel);
-            document.removeEventListener('keydown', onKeyDown);
+        if(isScroll){
+            window.addEventListener('resize', onResize);
+            return () => {
+                window.removeEventListener('resize', onResize);
+            }
+        } else {
+            window.addEventListener('touchstart', onTouchStart);
+            window.addEventListener('wheel', onWheel);
+            document.addEventListener('keydown', onKeyDown);
+            window.addEventListener('resize', onResize);
+            return () => {
+                window.removeEventListener('touchstart', onTouchStart);
+                window.removeEventListener('resize', onResize);
+                window.removeEventListener('wheel', onWheel);
+                document.removeEventListener('keydown', onKeyDown);
+            }
         }
     }, [onWheel, onResize, onKeyDown]);
 

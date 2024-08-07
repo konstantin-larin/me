@@ -1,14 +1,22 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  future: {
-    hoverOnlyWhenSupported: true,
-  },
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
-  theme: {
-    extend: {},
-  },
-  plugins: [],
+    future: {
+        hoverOnlyWhenSupported: true,
+    },
+    content: [
+        "./index.html",
+        "./src/**/*.{js,ts,jsx,tsx}",
+    ],
+
+    theme: {
+        extend: {
+            screens: {
+                "mh": {
+                    'raw': ('(min-height: 450px)')
+                }
+            }
+        }
+    }
+    ,
+    plugins: [],
 }

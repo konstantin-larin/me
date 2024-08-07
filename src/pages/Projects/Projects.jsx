@@ -73,8 +73,7 @@ export default function Projects() {
                 className={"h-full"}
                 spaceBetween={50}
                 slidesPerView={1}
-                onSlideChange={() => console.log('slide change')}
-                onSwiper={(swiper) => console.log(swiper)}
+                allowTouchMove={window.innerWidth <= 768}
             >
                 {projects.map(project => {
                     return (
@@ -83,8 +82,8 @@ export default function Projects() {
                         </SwiperSlide>
                     )
                 })}
-                <div className={"swiper-button-next p-8 bg-black opacity-30 hover:opacity-70 transition-opacity"}></div>
-                <div className={"swiper-button-prev p-8 bg-black opacity-30 hover:opacity-70 transition-opacity"}></div>
+                <div className={"swiper-button-next p-4 sm:p-6 md:p-8 bg-black opacity-30 hover:opacity-70 transition-opacity"}></div>
+                <div className={"swiper-button-prev p-4 sm:p-6 md:p-8 bg-black opacity-30 hover:opacity-70 transition-opacity"}></div>
             </Swiper>
         </Section>
     )
