@@ -26,7 +26,7 @@ export default function AboutMe() {
 
             {sourceLoaded ? <img
                 src={sourceLoaded}
-                className={"h-2/4 lg:h-2/3 xl:h-4/5 self-center md:self-end"}
+                className={"w-1/2 h-auto mh:w-auto mh:h-2/4 mh:lg:h-2/3 mh:xl:h-4/5 self-center md:self-end"}
                 alt="Константин Ларин"
             /> : ""}
         </Section>

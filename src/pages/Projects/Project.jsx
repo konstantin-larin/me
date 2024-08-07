@@ -30,7 +30,7 @@ export default function Project({project, isOpened, setIsOpened}) {
     }, [handleResize]);
     return (
         <div
-            className={`h-[200px] mh:h-full relative flex items-center justify-center select-text bg-center bg-cover bg-no-repeat bg-violet-500 bg-opacity-50 bg-blend-multiply`}
+            className={`h-[500px] mh:h-full relative flex items-center justify-center select-text bg-center bg-cover bg-no-repeat bg-violet-500 bg-opacity-50 bg-blend-multiply`}
             style={img ? {
                 backgroundImage: `url(${img})`,
             } : {}}>

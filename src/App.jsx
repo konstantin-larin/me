@@ -1,4 +1,5 @@
 import './App.css'
+import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 import Navigation from './layouts/Navigation/Navigation.jsx'
 import AboutMe from "./pages/AboutMe/AboutMe.jsx";
 import Projects from './pages/Projects/Projects.jsx'
@@ -29,6 +30,13 @@ function App() {
         return window.innerHeight <= 450;
     }
 
+    useEffect(() => {
+        if(isScroll){
+            enablePageScroll();
+        } else {
+            disablePageScroll()
+        }
+    }, [isScroll]);
 
     function onWheel(e) {
         if (Math.abs(e.deltaY) < 100) return;
