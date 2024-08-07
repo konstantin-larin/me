@@ -21,7 +21,7 @@ const sections = [
 ]
 
 function App() {
-    const [isScroll, setIsScroll] = useState()
+    const [isScroll, setIsScroll] = useState(defineIsScroll())
     const [activeSectionId, setActiveSectionId] = useState(sections[0].id);
     const activeSectionIndex = sections.findIndex(section => section.id === activeSectionId);
 
@@ -52,6 +52,17 @@ function App() {
     function onResize() {
         setIsScroll(defineIsScroll());
         setActiveSectionId(sections[0].id);
+    }
+
+    function onScroll(e){
+        console.log(e);
+        const el = document.getElementById(activeSectionId);
+        if(window.scrollY - el.offsetTop < -30 && activeSectionIndex > 0){
+            setActiveSectionId(sections[activeSectionIndex - 1].id);
+        }
+        if(window.scrollY > (el.scrollHeight / 1.4 + el.offsetTop) && activeSectionIndex < sections.length - 1){
+            setActiveSectionId(sections[activeSectionIndex + 1].id);
+        }
     }
 
     // для телефонов
@@ -86,8 +97,10 @@ function App() {
     useEffect(() => {
         if(isScroll){
             window.addEventListener('resize', onResize);
+            window.addEventListener('scroll', onScroll)
             return () => {
                 window.removeEventListener('resize', onResize);
+                window.removeEventListener('scroll', onScroll)
             }
         } else {
             window.addEventListener('touchstart', onTouchStart);
@@ -101,10 +114,12 @@ function App() {
                 document.removeEventListener('keydown', onKeyDown);
             }
         }
-    }, [onWheel, onResize, onKeyDown]);
+    }, [onWheel, onResize, onKeyDown, onScroll]);
 
     useEffect(() => {
-        document.getElementById(activeSectionId).scrollIntoView({behavior: "smooth"});
+        if(!isScroll){
+            document.getElementById(activeSectionId).scrollIntoView({behavior: "smooth"});
+        }
     }, [activeSectionId]);
 
     return (
