@@ -36,6 +36,7 @@ function App() {
         if(isScroll){
             enablePageScroll();
         } else {
+            setIsScrolling(false)
             disablePageScroll()
         }
     }, [isScroll]);
