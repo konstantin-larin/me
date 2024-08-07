@@ -4,7 +4,7 @@ import Navigation from './layouts/Navigation/Navigation.jsx'
 import AboutMe from "./pages/AboutMe/AboutMe.jsx";
 import Projects from './pages/Projects/Projects.jsx'
 import Contacts from "./pages/Contacts/Contacts.jsx";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 
 const sections = [
     {
@@ -22,7 +22,9 @@ const sections = [
 ]
 
 function App() {
-    const [isScroll, setIsScroll] = useState(defineIsScroll())
+    const scrollY = useRef(window.scrollY);
+    const [isScroll, setIsScroll] = useState(defineIsScroll());
+    const [isScrolling, setIsScrolling] = useState(true);
     const [activeSectionId, setActiveSectionId] = useState(sections[0].id);
     const activeSectionIndex = sections.findIndex(section => section.id === activeSectionId);
 
@@ -62,14 +64,19 @@ function App() {
         setActiveSectionId(sections[0].id);
     }
 
-    function onScroll(e){
-        console.log(e);
-        const el = document.getElementById(activeSectionId);
-        if(window.scrollY - el.offsetTop < -30 && activeSectionIndex > 0){
-            setActiveSectionId(sections[activeSectionIndex - 1].id);
-        }
-        if(window.scrollY > (el.scrollHeight / 1.4 + el.offsetTop) && activeSectionIndex < sections.length - 1){
-            setActiveSectionId(sections[activeSectionIndex + 1].id);
+    function onScroll(){
+        if(Math.abs(window.scrollY - scrollY.current) > window.innerHeight / 1.3){ //экспериментально вывел для избегания большого количества ререндерингов
+            console.log(window.scrollY);
+            console.log(scrollY.current)
+            scrollY.current = window.scrollY;
+            setIsScrolling(true);
+            const el = document.getElementById(activeSectionId);
+            if(window.scrollY - el.offsetTop < -30 && activeSectionIndex > 0){
+                setActiveSectionId(sections[activeSectionIndex - 1].id);
+            }
+            if(window.scrollY > (el.scrollHeight / 1.4 + el.offsetTop) && activeSectionIndex < sections.length - 1){
+                setActiveSectionId(sections[activeSectionIndex + 1].id);
+            }
         }
     }
 
@@ -125,15 +132,18 @@ function App() {
     }, [onWheel, onResize, onKeyDown, onScroll]);
 
     useEffect(() => {
-        if(!isScroll){
-            document.getElementById(activeSectionId).scrollIntoView({behavior: "smooth"});
+        if(!isScrolling){
+            document.getElementById(activeSectionId).scrollIntoView({behavior: (isScroll ? "instant" : "smooth") });
         }
-    }, [activeSectionId]);
+    }, [activeSectionId, isScrolling, isScroll]);
 
     return (
         <>
             <Navigation sections={sections} activeSectionId={activeSectionId}
-                        setActiveSectionId={setActiveSectionId}></Navigation>
+                        setActiveSectionId={(id) => {
+                            setIsScrolling(false)
+                            setActiveSectionId(id);
+                        }}></Navigation>
             <AboutMe></AboutMe>
             <Projects></Projects>
             <Contacts></Contacts>
