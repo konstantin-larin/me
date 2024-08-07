@@ -66,8 +66,6 @@ function App() {
 
     function onScroll(){
         if(Math.abs(window.scrollY - scrollY.current) > window.innerHeight / 1.3){ //экспериментально вывел для избегания большого количества ререндерингов
-            console.log(window.scrollY);
-            console.log(scrollY.current)
             scrollY.current = window.scrollY;
             setIsScrolling(true);
             const el = document.getElementById(activeSectionId);
