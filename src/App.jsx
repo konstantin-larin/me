@@ -38,7 +38,7 @@ function App() {
         } else {
             setFillGapMethod('none')
             setIsScrolling(false)
-            disablePageScroll({})
+            disablePageScroll()
         }
     }, [isScroll]);
 
