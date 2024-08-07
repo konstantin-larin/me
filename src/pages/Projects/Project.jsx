@@ -56,7 +56,7 @@ export default function Project({project, isOpened, setIsOpened}) {
                 className={`
                 w-9/12 sm:w-10/12 self-end duration-400 rounded-t-2xl
                 px-8 py-3 
-                ` + (isOpened ? " h-4/5 bg-indigo-950" : "  h-0")}>
+                ` + (isOpened ? "visible h-4/5 bg-indigo-950" : "hidden  h-0")}>
                 <h2 className={"text-2xl sm:text-4xl tracking-wider"}>{project.title}</h2>
                 <h3 className={"mt-6 text-xl sm:text-2xl"}>{project.subtitle}</h3>
                 <h4 className={"mt-4 text-lg sm:text-xl"}>{project.description}</h4>
